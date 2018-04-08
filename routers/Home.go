@@ -3,8 +3,9 @@ package routers
 import (
 	"github.com/gin-gonic/gin"
 	"net/http"
+	"../integrate/util"
 )
 
 func Home(c *gin.Context) {
-	c.JSON(http.StatusOK, Success("data is ready"))
+	c.JSON(http.StatusOK, util.Success("data is ready"))
 }

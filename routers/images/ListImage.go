@@ -3,7 +3,7 @@ package images
 import (
 	"github.com/gin-gonic/gin"
 	"net/http"
-	"../../routers"
+	"../../integrate/util"
 	"../../services/docker-cli"
 	"strconv"
 )
@@ -25,8 +25,8 @@ func ListImage(c *gin.Context) {
 	end := begin + size
 	length := len(images)
 	if size >= length {
-		c.JSON(http.StatusOK, routers.Success(images))
+		c.JSON(http.StatusOK, util.Success(images))
 		return
 	}
-	c.JSON(http.StatusOK, routers.Success(images[begin : end]))
+	c.JSON(http.StatusOK, util.Success(images[begin : end]))
 }
