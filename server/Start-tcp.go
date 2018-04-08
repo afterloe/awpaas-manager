@@ -3,7 +3,7 @@ package server
 import (
 	"github.com/gin-gonic/gin"
 	"net/http"
-	"../routers"
+	//"../routers"
 	"../integrate/logger"
 	"../integrate/notSupper"
 	"os"
@@ -24,7 +24,7 @@ func StartUpTCPServer(addr *string) {
 	engine.Use(logger.Logger())
 	engine.NoRoute(notSupper.NotFound(&notFoundStr))
 	engine.NoMethod(notSupper.NotSupper(&notSupperStr))
-	routers.Execute(engine.Group("/v1"))
+	//routers.Execute(engine.Group("/v1"))
 	server := &http.Server{
 		Addr: *addr,
 		Handler: engine,
