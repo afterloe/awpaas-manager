@@ -4,7 +4,13 @@ import (
 	"io/ioutil"
 	"../../exceptions"
 	"encoding/json"
+	"github.com/satori/go.uuid"
 )
+
+func GeneratorUUID() string {
+	code, _ := uuid.NewV4()
+	return code.String()
+}
 
 func ReadRealFile(path string) (string, error) {
 	data, err := ioutil.ReadFile(path)

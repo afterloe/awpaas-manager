@@ -30,7 +30,7 @@ func Error(info string) {
 	fmt.Fprintf(err, errorLayout, GetFormatTime(), info)
 }
 
-func Info(info string) {
+func Info(info interface{}) {
 	fmt.Fprintf(out, infoLayout, GetFormatTime(), info)
 }
 
