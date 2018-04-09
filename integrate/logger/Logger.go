@@ -16,9 +16,9 @@ var (
 func init() {
 	out = os.Stdout
 	err = os.Stderr
-	timeFormat = "2006/01/02 - 15:04:05"
-	logLayout = "[awpaas-manager][log][%v] - %3d | %13v | %15s | %-7s %s\n"
-	infoLayout = "[awpaas-manager][info][%v] - %s \n"
+	timeFormat = "2006-01-02 - 15:04:05"
+	logLayout = "[awpaas-manager][log  ][%v] - %3d | %13v | %15s | %-7s %s\n"
+	infoLayout = "[awpaas-manager][info ][%v] - %s \n"
 	errorLayout = "[awpaas-manager][error][%v] - %s \n"
 }
 

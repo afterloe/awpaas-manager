@@ -22,6 +22,7 @@ func StartUpTCPServer(addr *string) {
 	engine := gin.New()
 	engine.Use(gin.Recovery())
 	engine.Use(logger.Logger())
+	engine.Use(notSupper.HasError())
 	engine.NoRoute(notSupper.NotFound(&notFoundStr))
 	engine.NoMethod(notSupper.NotSupper(&notSupperStr))
 	routers.Execute(engine.Group("/v1"))
