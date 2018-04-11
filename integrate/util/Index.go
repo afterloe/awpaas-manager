@@ -5,11 +5,13 @@ import (
 	"../../exceptions"
 	"encoding/json"
 	"github.com/satori/go.uuid"
+	//"strings"
+	"strings"
 )
 
 func GeneratorUUID() string {
 	code, _ := uuid.NewV4()
-	return code.String()
+	return strings.ToUpper(strings.Replace(code.String(), "-","", -1))
 }
 
 func ReadRealFile(path string) (string, error) {

@@ -7,6 +7,12 @@ import (
 	"encoding/hex"
 )
 
+func Test_UUIDPr(t *testing.T) {
+	md5Str := "cbff8179-467c-41a6-bc66-d9d6b8147a76"
+	newStr := strings.Replace(md5Str, "-", "", -1)
+	t.Log(strings.ToUpper(newStr))
+}
+
 func Test_md5(t *testing.T) {
 	pwd := "skxx0410!#"
 	md5Ctx := md5.New()
