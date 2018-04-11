@@ -20,6 +20,7 @@ func ListImage(c *gin.Context) {
 	images, err := docker_cli.ListImage()
 	if nil != err {
 		c.Error(err)
+		return
 	}
 	begin := page * size
 	end := begin + size
