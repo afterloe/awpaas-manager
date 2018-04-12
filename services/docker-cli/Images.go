@@ -5,6 +5,21 @@ import (
 	"fmt"
 )
 
+/**
+	Build an image from a tar archive with a Dockerfile in it.
+ */
+func BuildImage() (types.ImageBuildResponse, error){
+	cli, err := getCli()
+	if nil != err {
+		return types.ImageBuildResponse{}, err
+	}
+	imageBuildResponse, err := cli.ImageBuild(getContext(), nil, types.ImageBuildOptions{})
+	if nil != err {
+		return types.ImageBuildResponse{}, err
+	}
+	return imageBuildResponse, nil
+}
+
 func ListImage() ([]types.ImageSummary, error) {
 	cli, err := getCli()
 	if nil != err {
