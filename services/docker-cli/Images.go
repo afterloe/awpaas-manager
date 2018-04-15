@@ -3,17 +3,29 @@ package docker_cli
 import (
 	"github.com/docker/docker/api/types"
 	"fmt"
+	"os"
 )
 
 /**
 	Build an image from a tar archive with a Dockerfile in it.
  */
-func BuildImage() (types.ImageBuildResponse, error){
+func BuildImage(contextPath, imageName, version string) (types.ImageBuildResponse, error){
 	cli, err := getCli()
 	if nil != err {
 		return types.ImageBuildResponse{}, err
 	}
-	imageBuildResponse, err := cli.ImageBuild(getContext(), nil, types.ImageBuildOptions{})
+	contextReader, err := os.Open(contextPath)
+	defer contextReader.Close()
+	if nil == err {
+		return types.ImageBuildResponse{}, err
+	}
+	imageBuildResponse, err := cli.ImageBuild(getContext(), contextReader, types.ImageBuildOptions{
+		Tags: []string{imageName+":"+version},
+		NoCache: true,
+		SuppressOutput: true,
+		Remove: true,
+		ForceRemove: true,
+	})
 	if nil != err {
 		return types.ImageBuildResponse{}, err
 	}

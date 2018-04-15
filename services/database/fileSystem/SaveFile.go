@@ -8,13 +8,11 @@ import (
 	"fmt"
 )
 
-const INSERT = "INSERT INTO uploadRecode(id, name, fileType, uploadName, size) VALUES($1, $2, $3, $4, $5)"
-
 /**
 	保存数据到数据库
  */
 func SaveUploadInfo(info *domain.UploadFileInfo) (*domain.UploadFileInfo, error) {
-	result, err := dao.Insert(INSERT, [][]interface{}{
+	result, err := dao.Insert(priv_INSERT, [][]interface{}{
 		{nil, info.Name, info.FileType, info.UploadName, info.Size},
 	})
 	if nil != err {
