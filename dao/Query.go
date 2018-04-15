@@ -3,6 +3,7 @@ package dao
 import (
 	"database/sql"
 	"../exceptions"
+	"fmt"
 )
 
 type queryExecute struct {
@@ -52,6 +53,7 @@ func (query *queryExecute) execute(db *sql.DB) (interface{}, error) {
 func Query(sql string, args ...interface{})([]map[string]interface{}, error) {
 	result, err := use(&queryExecute{sql, args})
 	if nil != err {
+		fmt.Println(err)
 		return nil, &exceptions.Error{Msg: "query sql fail", Code: 500}
 	}
 	return result.([]map[string]interface{}), nil
