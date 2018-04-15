@@ -12,7 +12,10 @@ import (
 
 const saveFilePath = "/tmp/uploadImage/"
 
-func NewImage(context *gin.Context) {
+/*
+	上传文件到服务器
+ */
+func UploadFile(context *gin.Context) {
 	file, err := context.FormFile("uploadFile")
 	if nil != err {
 		context.Error(&exceptions.Error{ Msg: "no file to upload", Code: 400 })
@@ -27,6 +30,10 @@ func NewImage(context *gin.Context) {
 	index := strings.LastIndex(file.Filename, ".")
 	fileInfo := &domain.UploadFileInfo{Name: tmpName, UploadName: file.Filename[:index],
 		FileType: file.Filename[index + 1:], Size: file.Size}
-	fileSystem.SaveUploadInfo(fileInfo)
-	context.JSON(http.StatusOK, util.Success("upload Success"))
+	fileInfo, err = fileSystem.SaveUploadInfo(fileInfo)
+	if nil != err {
+		context.Error(err)
+		return
+	}
+	context.JSON(http.StatusOK, util.Success(fileInfo))
 }

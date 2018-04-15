@@ -10,9 +10,9 @@ func Test_dao_func_insert(t *testing.T) {
 	var (
 		sql = "INSERT INTO uploadRecode VALUES($1, $2, $3, $4, $5)"
 		items = [][]interface{}{
-			{1, "9dfa40a0da3b1a8a7c34abc596d81ede2dba4ecd5c0a7211086d6685da1ce6ef", ".png", "Downloads.png", 45002},
-			{2, "917e7cdebc8bcf22f07f5fea199a23412cfb0d3d9bd6a78a6df007560f4f61b7", ".jpg", "exceptions.jpg", 15002},
-			{3, "26b0c207c4a94afd5766ca0ee5e9af31ddd3cf4fd69d26eef382eb1a8534434e", ".dll", "manager-db.dll", 35002},
+			{nil, "9dfa40a0da3b1a8a7c34abc596d81ede2dba4ecd5c0a7211086d6685da1ce6ef", ".png", "Downloads.png", 45002},
+			{nil, "917e7cdebc8bcf22f07f5fea199a23412cfb0d3d9bd6a78a6df007560f4f61b7", ".jpg", "exceptions.jpg", 15002},
+			{nil, "26b0c207c4a94afd5766ca0ee5e9af31ddd3cf4fd69d26eef382eb1a8534434e", ".dll", "manager-db.dll", 35002},
 		}
 	)
 
