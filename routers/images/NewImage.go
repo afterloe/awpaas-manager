@@ -20,7 +20,6 @@ func NewImage(context *gin.Context) {
 		version = context.PostForm("version")
 		group = context.PostForm("group")
 		private = context.DefaultPostForm("isPrivate", "true")
-		prefix = context.DefaultPostForm("host", "127.0.0.1")
 	)
 	err := util.CheckNeed(repositoryId, imageName, version, group)
 	if nil != err {
@@ -41,13 +40,20 @@ func NewImage(context *gin.Context) {
 		return
 	}
 	fileInfo, err := fileSystem.GetFileInfo(id)
+	if nil != err {
+		context.Error(err)
+		return
+	}
 	contextPath := saveFilePath + fileInfo["name"].(string)
 	if nil != err {
 		context.Error(err)
 		return
 	}
+	var prefix string
 	if isPrivate {
 		prefix = "127.0.0.1"
+	} else {
+		prefix = context.DefaultPostForm("host", "127.0.0.1")
 	}
 	fullImageName := strings.Join([]string{prefix, group, imageName}, "/")
 	res, err := docker_cli.BuildImage(contextPath, fullImageName, version)
