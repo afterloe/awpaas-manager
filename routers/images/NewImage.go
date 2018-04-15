@@ -57,12 +57,9 @@ func NewImage(context *gin.Context) {
 	}
 	fullImageName := strings.Join([]string{prefix, group, imageName}, "/")
 	res, err := docker_cli.BuildImage(contextPath, fullImageName, version)
-	defer res.Body.Close()
 	if nil != err {
 		logger.Error(err.Error())
 		context.Error(&exceptions.Error{Msg: "build Image failed.", Code: 500})
 	}
-	resBuff := make([]byte, 1024)
-	res.Body.Read(resBuff)
-	context.JSON(200, util.Success(string(resBuff)))
+	context.JSON(200, util.Success(res))
 }

@@ -9,15 +9,15 @@ import (
 /**
 	Build an image from a tar archive with a Dockerfile in it.
  */
-func BuildImage(contextPath, imageName, version string) (types.ImageBuildResponse, error){
+func BuildImage(contextPath, imageName, version string) (interface{}, error){
 	cli, err := getCli()
 	if nil != err {
-		return types.ImageBuildResponse{}, err
+		return nil, err
 	}
 	contextReader, err := os.Open(contextPath)
 	defer contextReader.Close()
-	if nil == err {
-		return types.ImageBuildResponse{}, err
+	if nil != err {
+		return nil, err
 	}
 	imageBuildResponse, err := cli.ImageBuild(getContext(), contextReader, types.ImageBuildOptions{
 		Tags: []string{imageName+":"+version},
@@ -27,9 +27,12 @@ func BuildImage(contextPath, imageName, version string) (types.ImageBuildRespons
 		ForceRemove: true,
 	})
 	if nil != err {
-		return types.ImageBuildResponse{}, err
+		return nil, err
 	}
-	return imageBuildResponse, nil
+	resBuff := make([]byte, 1024)
+	imageBuildResponse.Body.Read(resBuff)
+	defer imageBuildResponse.Body.Close()
+	return string(resBuff), nil
 }
 
 func ListImage() ([]types.ImageSummary, error) {

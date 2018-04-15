@@ -26,7 +26,7 @@ func init() {
 	}
 }
 
-func getContext() context.Context{
+func getContext() context.Context {
 	return context.Background()
 }
 
