@@ -23,6 +23,10 @@ func NewImage(context *gin.Context) {
 		prefix = context.DefaultPostForm("host", "127.0.0.1")
 	)
 	err := util.CheckNeed(repositoryId, imageName, version, group)
+	if nil != err {
+		context.Error(err)
+		return
+	}
 	isPrivate, err := strconv.ParseBool(private)
 	if nil != err {
 		isPrivate = true
