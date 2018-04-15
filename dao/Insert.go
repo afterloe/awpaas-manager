@@ -3,6 +3,7 @@ package dao
 import (
 	"database/sql"
 	"../exceptions"
+	"fmt"
 )
 
 type insertExecute struct {
@@ -31,6 +32,7 @@ func (insert *insertExecute) execute(db *sql.DB) (interface{}, error) {
 func Insert(sql string, items [][]interface{}) ([]interface{}, error) {
 	result, err := use(&insertExecute{sql, items})
 	if nil != err {
+		fmt.Println(err)
 		return nil, &exceptions.Error{Msg: "Insert value fail.", Code: 500}
 	}
 
