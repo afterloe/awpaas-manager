@@ -30,11 +30,7 @@ func NewImage(context *gin.Context) {
 	if nil != err {
 		isPrivate = true
 	}
-	if nil != err {
-		context.Error(err)
-		return
-	}
-	id,err := strconv.Atoi(repositoryId)
+	id, err := strconv.Atoi(repositoryId)
 	if nil != err {
 		context.Error(err)
 		return
@@ -45,10 +41,6 @@ func NewImage(context *gin.Context) {
 		return
 	}
 	contextPath := saveFilePath + fileInfo["name"].(string)
-	if nil != err {
-		context.Error(err)
-		return
-	}
 	var prefix string
 	if isPrivate {
 		prefix = "127.0.0.1"
@@ -73,5 +65,5 @@ func extractSha(res string) string {
 		return ""
 	}
 	val := strings.Split(module["stream"].(string), ":")
-	return val[1]
+	return strings.Replace(val[1], "\n", "", -1)
 }
