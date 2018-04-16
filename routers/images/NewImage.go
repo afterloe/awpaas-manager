@@ -61,5 +61,17 @@ func NewImage(context *gin.Context) {
 		logger.Error(err.Error())
 		context.Error(&exceptions.Error{Msg: "build Image failed.", Code: 500})
 	}
-	context.JSON(200, util.Success(res))
+	context.JSON(200, util.Success(extractSha(res.(string))))
+}
+
+/**
+提取docker 返回的 sha256 code
+ */
+func extractSha(res string) string {
+	module, err := util.FormatToStruct(&res)
+	if nil != err {
+		return ""
+	}
+	val := strings.Split(module["stream"].(string), ":")
+	return val[1]
 }

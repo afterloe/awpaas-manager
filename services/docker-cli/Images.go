@@ -30,9 +30,12 @@ func BuildImage(contextPath, imageName, version string) (interface{}, error){
 		return nil, err
 	}
 	resBuff := make([]byte, 1024)
-	imageBuildResponse.Body.Read(resBuff)
+	end, err := imageBuildResponse.Body.Read(resBuff)
 	defer imageBuildResponse.Body.Close()
-	return string(resBuff), nil
+	if -1 != end {
+		return string(resBuff[:end]), nil
+	}
+	return nil, nil
 }
 
 func ListImage() ([]types.ImageSummary, error) {
