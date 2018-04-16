@@ -2,7 +2,6 @@ package docker_cli
 
 import (
 	"github.com/docker/docker/api/types"
-	"fmt"
 	"os"
 )
 
@@ -38,6 +37,9 @@ func BuildImage(contextPath, imageName, version string) (interface{}, error){
 	return nil, nil
 }
 
+/*
+	get image list
+ */
 func ListImage() ([]types.ImageSummary, error) {
 	cli, err := getCli()
 	if nil != err {
@@ -50,15 +52,17 @@ func ListImage() ([]types.ImageSummary, error) {
 	return images, nil
 }
 
+/**
+	get inspect of image
+ */
 func InspectImage(imageID string) (interface{}, error) {
 	cli, err := getCli()
 	if nil != err {
 		return nil, err
 	}
-	imageType, image, err := cli.ImageInspectWithRaw(getContext(), imageID)
+	imageType, _, err := cli.ImageInspectWithRaw(getContext(), imageID)
 	if nil != err {
 		return nil, err
 	}
-	fmt.Println(string(image))
 	return imageType, nil
 }
