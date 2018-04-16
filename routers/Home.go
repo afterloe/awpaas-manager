@@ -3,7 +3,7 @@ package routers
 import (
 	"github.com/gin-gonic/gin"
 	"net/http"
-	"../integrate/util"
+	"../util"
 )
 
 func Home(c *gin.Context) {

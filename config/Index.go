@@ -1,7 +1,7 @@
 package config
 
 import (
-	"../integrate/util"
+	"../util"
 	"../integrate/logger"
 	"../exceptions"
 	"os"

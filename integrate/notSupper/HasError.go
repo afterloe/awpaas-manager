@@ -3,7 +3,7 @@ package notSupper
 import (
 	"github.com/gin-gonic/gin"
 	"net/http"
-	"../util"
+	"../../util"
 	"../../exceptions"
 )
 

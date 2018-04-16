@@ -2,7 +2,7 @@ package test
 
 import (
 	"testing"
-	"../integrate/util"
+	"../util"
 	"strings"
 )
 

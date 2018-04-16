@@ -3,7 +3,7 @@ package images
 import (
 	"github.com/gin-gonic/gin"
 	"net/http"
-	"../../integrate/util"
+	"../../util"
 	"../../services/docker-cli"
 	"strconv"
 )

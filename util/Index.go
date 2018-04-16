@@ -2,7 +2,7 @@ package util
 
 import (
 	"io/ioutil"
-	"../../exceptions"
+	"../exceptions"
 	"encoding/json"
 	"github.com/satori/go.uuid"
 	//"strings"

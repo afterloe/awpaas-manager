@@ -4,7 +4,7 @@ import (
 	"github.com/gin-gonic/gin"
 	"../../services/docker-cli"
 	"../../services/database/fileSystem"
-	"../../integrate/util"
+	"../../util"
 	"../../exceptions"
 	"../../integrate/logger"
 	"strconv"

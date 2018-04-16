@@ -1,7 +1,7 @@
 package util
 
 import (
-	"../../exceptions"
+	"../exceptions"
 )
 
 func CheckNeed(args... interface{}) error {

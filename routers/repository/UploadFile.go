@@ -3,7 +3,7 @@ package repository
 import (
 	"github.com/gin-gonic/gin"
 	"../../exceptions"
-	"../../integrate/util"
+	"../../util"
 	"../../services/database/fileSystem"
 	"../../domain"
 	"strings"
