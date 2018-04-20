@@ -1,4 +1,4 @@
-package fileSystem
+package fsRegistry
 
 import (
 	"../../../domain"
@@ -20,6 +20,6 @@ func SaveUploadInfo(info *domain.UploadFileInfo) (*domain.UploadFileInfo, error)
 	}
 	val := reflect.ValueOf(result[0])
 	info.Id = val.MethodByName("LastInsertId").Call(nil)[0].Int()
-	logger.Info(fmt.Sprintf("insert into uploadRecode. id is %d", info.Id))
+	logger.Info(fmt.Sprintf("insert db use SaveUploadInfo. id is %d", info.Id))
 	return info, nil
 }

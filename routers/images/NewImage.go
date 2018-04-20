@@ -3,12 +3,15 @@ package images
 import (
 	"github.com/gin-gonic/gin"
 	"../../services/docker-cli"
-	"../../services/database/fileSystem"
+	"../../services/database/fsRegistry"
+	"../../services/database/packageRegistry"
 	"../../util"
 	"../../exceptions"
 	"../../integrate/logger"
+	"../../domain"
 	"strconv"
 	"strings"
+	"time"
 )
 
 const saveFilePath = "/tmp/uploadImage/"
@@ -19,6 +22,7 @@ func NewImage(context *gin.Context) {
 		imageName = context.PostForm("imageName")
 		version = context.PostForm("version")
 		group = context.PostForm("group")
+		changeLog = context.PostForm("changeLog")
 		private = context.DefaultPostForm("isPrivate", "true")
 	)
 	err := util.CheckNeed(repositoryId, imageName, version, group)
@@ -35,7 +39,7 @@ func NewImage(context *gin.Context) {
 		context.Error(err)
 		return
 	}
-	fileInfo, err := fileSystem.GetFileInfo(id)
+	fileInfo, err := fsRegistry.GetFileInfo(id)
 	if nil != err {
 		context.Error(err)
 		return
@@ -53,7 +57,27 @@ func NewImage(context *gin.Context) {
 		logger.Error(err.Error())
 		context.Error(&exceptions.Error{Msg: "build Image failed.", Code: 500})
 	}
-	context.JSON(200, util.Success(extractSha(res.(string))))
+	shaCode := extractSha(res.(string))
+	if "" != shaCode {
+		packageInfo, _ := packageRegistry.SavePackageInfo(&domain.PackageInfoDO{
+			BaseInfo: domain.BaseInfo{
+				CreateTime: time.Now().Unix(),
+				Status: true,
+			},
+			Uid: int64(0),
+			Name: imageName,
+			Group: group,
+			Host: prefix,
+			RepositoryId: int64(id),
+			ChangeLog: changeLog,
+			Icon: int64(0),
+			Version: version,
+			Tag: fullImageName,
+		})
+		context.JSON(200, util.Success(packageInfo))
+	} else {
+		context.Error(&exceptions.Error{Msg: "Create Image failed!", Code: 500})
+	}
 }
 
 /**

@@ -1,4 +1,4 @@
-package fileSystem
+package fsRegistry
 
 import (
 	"../../../dao"

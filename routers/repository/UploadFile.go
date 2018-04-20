@@ -4,7 +4,7 @@ import (
 	"github.com/gin-gonic/gin"
 	"../../exceptions"
 	"../../util"
-	"../../services/database/fileSystem"
+	"../../services/database/fsRegistry"
 	"../../domain"
 	"strings"
 	"net/http"
@@ -30,7 +30,7 @@ func UploadFile(context *gin.Context) {
 	index := strings.LastIndex(file.Filename, ".")
 	fileInfo := &domain.UploadFileInfo{Name: tmpName, UploadName: file.Filename[:index],
 		FileType: file.Filename[index + 1:], Size: file.Size}
-	fileInfo, err = fileSystem.SaveUploadInfo(fileInfo)
+	fileInfo, err = fsRegistry.SaveUploadInfo(fileInfo)
 	if nil != err {
 		context.Error(err)
 		return
