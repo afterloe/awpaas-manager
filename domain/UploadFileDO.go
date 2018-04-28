@@ -8,6 +8,8 @@ type UploadFileInfo struct {
 	FileType string
 	UploadName string
 	Size int64
+	Group string
+	BaseInfo
 }
 
 func (info *UploadFileInfo) String() string {
