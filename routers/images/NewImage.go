@@ -8,10 +8,8 @@ import (
 	"../../util"
 	"../../exceptions"
 	"../../integrate/logger"
-	"../../domain"
 	"strconv"
 	"strings"
-	"time"
 )
 
 const saveFilePath = "/tmp/uploadImage/"
@@ -56,24 +54,26 @@ func NewImage(context *gin.Context) {
 	if nil != err {
 		logger.Error(err.Error())
 		context.Error(&exceptions.Error{Msg: "build Image failed.", Code: 500})
+		return
 	}
 	shaCode := extractSha(res.(string))
 	if "" != shaCode {
-		packageInfo, _ := packageRegistry.SavePackageInfo(&domain.PackageInfoDO{
-			BaseInfo: domain.BaseInfo{
-				CreateTime: time.Now().Unix(),
-				Status: true,
-			},
-			Uid: int64(0),
-			Name: imageName,
-			Group: group,
-			Host: prefix,
-			RepositoryId: int64(id),
-			ChangeLog: changeLog,
-			Icon: int64(0),
-			Version: version,
-			Tag: fullImageName,
-		})
+		packageInfo := &map[string]interface{}{
+			"uid": 0,
+			"name": imageName,
+			"group": group,
+			"host": prefix,
+			"repositoryId": id,
+			"changeLog": changeLog,
+			"icon": 0,
+			"version": version,
+			"tag": fullImageName,
+		}
+		packageInfo, err = packageRegistry.SavePackageInfo(packageInfo)
+		if nil != err {
+			context.Error(err)
+			return
+		}
 		context.JSON(200, util.Success(packageInfo))
 	} else {
 		context.Error(&exceptions.Error{Msg: "Create Image failed!", Code: 500})
