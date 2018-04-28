@@ -5,12 +5,12 @@ import (
 	"../../exceptions"
 	"../../util"
 	"../../services/database/fsRegistry"
-	"../../domain"
 	"strings"
 	"net/http"
 )
 
-const saveFilePath = "/tmp/uploadImage/"
+const saveFilePath = "/tmp/uploadImage"
+const groupPath = "fileRegistry"
 
 /*
 	上传文件到服务器
@@ -22,14 +22,18 @@ func UploadFile(context *gin.Context) {
 		return
 	}
 	tmpName := util.GeneratorUUID()
-	err = context.SaveUploadedFile(file, saveFilePath + tmpName)
+	err = context.SaveUploadedFile(file, strings.Join([]string{saveFilePath, groupPath, tmpName}, "/"))
 	if nil != err {
 		context.Error(err)
 		return
 	}
 	index := strings.LastIndex(file.Filename, ".")
-	fileInfo := &domain.UploadFileInfo{Name: tmpName, UploadName: file.Filename[:index],
-		FileType: file.Filename[index + 1:], Size: file.Size}
+	fileInfo := &map[string]interface{}{
+		"Name": tmpName,
+		"UploadName": file.Filename[:index],
+		"FileType": file.Filename[index + 1:],
+		"Size": file.Size,
+		"Group": groupPath}
 	fileInfo, err = fsRegistry.SaveUploadInfo(fileInfo)
 	if nil != err {
 		context.Error(err)
