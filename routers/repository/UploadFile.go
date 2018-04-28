@@ -29,11 +29,11 @@ func UploadFile(context *gin.Context) {
 	}
 	index := strings.LastIndex(file.Filename, ".")
 	fileInfo := &map[string]interface{}{
-		"Name": tmpName,
-		"UploadName": file.Filename[:index],
-		"FileType": file.Filename[index + 1:],
-		"Size": file.Size,
-		"Group": groupPath}
+		"name": tmpName,
+		"uploadName": file.Filename[:index],
+		"fileType": file.Filename[index + 1:],
+		"size": file.Size,
+		"group": groupPath}
 	fileInfo, err = fsRegistry.SaveUploadInfo(fileInfo)
 	if nil != err {
 		context.Error(err)
