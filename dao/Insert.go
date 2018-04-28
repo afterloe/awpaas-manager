@@ -1,9 +1,9 @@
 package dao
 
 import (
+	"../integrate/logger"
 	"database/sql"
 	"../exceptions"
-	"fmt"
 )
 
 type insertExecute struct {
@@ -14,6 +14,7 @@ type insertExecute struct {
 func (insert *insertExecute) execute(db *sql.DB) (interface{}, error) {
 	stmt, err := db.Prepare(insert.sql)
 	if nil != err {
+		logger.Error(err.Error())
 		return nil, &exceptions.Error {Msg: err.Error(), Code: 500}
 	}
 	history := make([]interface{}, 0)
@@ -32,7 +33,6 @@ func (insert *insertExecute) execute(db *sql.DB) (interface{}, error) {
 func Insert(sql string, items [][]interface{}) ([]interface{}, error) {
 	result, err := use(&insertExecute{sql, items})
 	if nil != err {
-		fmt.Println(err)
 		return nil, &exceptions.Error{Msg: "Insert value fail.", Code: 500}
 	}
 

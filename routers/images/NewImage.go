@@ -12,7 +12,7 @@ import (
 	"strings"
 )
 
-const saveFilePath = "/tmp/uploadImage/"
+const saveFilePath = "/tmp/uploadImage"
 
 func NewImage(context *gin.Context) {
 	var (
@@ -42,7 +42,7 @@ func NewImage(context *gin.Context) {
 		context.Error(err)
 		return
 	}
-	contextPath := saveFilePath + fileInfo["name"].(string)
+	contextPath := strings.Join([]string{saveFilePath, fileInfo["group"].(string), fileInfo["name"].(string)}, "/")
 	var prefix string
 	if isPrivate {
 		prefix = "127.0.0.1"
