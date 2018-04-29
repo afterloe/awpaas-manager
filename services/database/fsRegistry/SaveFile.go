@@ -14,7 +14,7 @@ import (
 func SaveUploadInfo(info *map[string]interface{}) (*map[string]interface{}, error) {
 	baseInfo, ok := (*info)["baseInfo"].(map[string]interface{})
 	if !ok {
-		baseInfo = map[string]interface{}{"CreateTime":time.Now().Unix(), "Status": true}
+		baseInfo = map[string]interface{}{"createTime":time.Now().Unix(), "status": true}
 	}
 	result, err := dao.Insert(priv_INSERT, [][]interface{}{
 		{nil, (*info)["name"], (*info)["fileType"], (*info)["uploadName"], (*info)["size"], (*info)["group"],

@@ -2,6 +2,7 @@ package packageRegistry
 
 import (
 	"../../../integrate/logger"
+	"../../../exceptions"
 	"../../../dao"
 	"reflect"
 	"fmt"
@@ -11,16 +12,19 @@ import (
 func SavePackageInfo(info *map[string]interface{}) (*map[string]interface{}, error){
 	baseInfo, ok := (*info)["baseInfo"].(map[string]interface{})
 	if !ok {
-		baseInfo = map[string]interface{}{"CreateTime":time.Now().Unix(), "Status": true}
+		baseInfo = map[string]interface{}{"createTime":time.Now().Unix(), "status": true}
 	}
 	result, err := dao.Insert(priv_INSERT, [][]interface{}{
-		{nil, (*info)["uid"], (*info)["name"], (*info)["group"], (*info)["repositoryId"], (*info)["changeLog"],
-			(*info)["icon"], baseInfo["createTime"], baseInfo["status"], (*info)["version"], baseInfo["updateTime"],
-			(*info)["tag"],
+		{nil, (*info)["uid"], (*info)["name"], (*info)["group"], (*info)["host"], (*info)["repositoryId"],
+			(*info)["changeLog"], (*info)["icon"], baseInfo["createTime"], baseInfo["status"], (*info)["version"],
+			baseInfo["updateTime"], (*info)["tag"],
 		},
 	})
 	if nil != err {
 		return nil, err
+	}
+	if 0 == len(result) {
+		return nil, &exceptions.Error{Msg: "insert row failed. no row to change", Code: 500}
 	}
 	val := reflect.ValueOf(result[0])
 	(*info)["id"]= val.MethodByName("LastInsertId").Call(nil)[0].Int()
