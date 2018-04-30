@@ -4,6 +4,7 @@ import (
 	"github.com/gin-gonic/gin"
 	"./images"
 	"./repository"
+	"./module"
 )
 
 /**
@@ -11,6 +12,10 @@ import (
  */
 func Execute(route *gin.RouterGroup) {
 	route.GET("/", Home)
+	route.POST("/package", module.NewModule) // 创建包
+	route.GET("/package/:packageId", module.Inspect) // 获取包信息
+	route.PUT("/package")
+	route.DELETE("/package")
 	route.GET("/image", images.ListImage) // 镜像列表
 	route.POST("/image", images.NewImage) // 构建镜像
 	route.GET("/image/:imageId", images.Inspect) // 镜像详情

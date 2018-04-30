@@ -1,4 +1,4 @@
-package images
+package module
 
 import (
 	"github.com/gin-gonic/gin"
@@ -14,7 +14,7 @@ import (
 	get image inspect
  */
 func Inspect(context *gin.Context) {
-	imageIdStr := context.Param("imageId")
+	imageIdStr := context.Param("packageId")
 	imageId, err := strconv.Atoi(imageIdStr)
 	if nil != err {
 		context.Error(&exceptions.Error{Msg: "valid imageId", Code: 400})

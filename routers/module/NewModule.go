@@ -1,4 +1,4 @@
-package images
+package module
 
 import (
 	"github.com/gin-gonic/gin"
@@ -14,7 +14,7 @@ import (
 
 const saveFilePath = "/tmp/uploadImage"
 
-func NewImage(context *gin.Context) {
+func NewModule(context *gin.Context) {
 	var (
 		repositoryId = context.PostForm("repositoryId")
 		imageName = context.PostForm("imageName")
