@@ -17,7 +17,7 @@ func SavePackageInfo(info *map[string]interface{}) (*map[string]interface{}, err
 	result, err := dao.Insert(priv_INSERT, [][]interface{}{
 		{nil, (*info)["uid"], (*info)["name"], (*info)["group"], (*info)["host"], (*info)["repositoryId"],
 			(*info)["changeLog"], (*info)["icon"], baseInfo["createTime"], baseInfo["status"], (*info)["version"],
-			baseInfo["updateTime"], (*info)["tag"],
+			baseInfo["updateTime"], (*info)["tag"], (*info)["shaCode"],
 		},
 	})
 	if nil != err {

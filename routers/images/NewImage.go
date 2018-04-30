@@ -68,6 +68,7 @@ func NewImage(context *gin.Context) {
 			"icon": 0,
 			"version": version,
 			"tag": fullImageName,
+			"shaCode": shaCode,
 		}
 		packageInfo, err = packageRegistry.SavePackageInfo(packageInfo)
 		if nil != err {
