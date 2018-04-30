@@ -13,6 +13,7 @@ import (
 func Execute(route *gin.RouterGroup) {
 	route.GET("/", Home)
 	route.POST("/package", module.NewModule) // 创建包
+	route.GET("/package", module.ListModule) // 包列表
 	route.GET("/package/:packageId", module.Inspect) // 获取包信息
 	route.PUT("/package")
 	route.DELETE("/package")
