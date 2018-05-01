@@ -4,6 +4,8 @@ import (
 	"github.com/gin-gonic/gin"
 	"strconv"
 	"../../services/database/packageRegistry"
+	"../../exceptions"
+	"../../util"
 )
 
 func ListModule(context *gin.Context) {
@@ -15,6 +17,14 @@ func ListModule(context *gin.Context) {
 	if nil != err {
 		size = 50
 	}
-
-
+	var (
+		group = context.Query("group")
+		status = true
+	)
+	result, err := packageRegistry.ListPackageInfo(page, size, status, group)
+	if nil != err {
+		context.Error(&exceptions.Error{Msg: err.Error(), Code: 500})
+		return
+	}
+	context.JSON(200, util.Success(result))
 }
