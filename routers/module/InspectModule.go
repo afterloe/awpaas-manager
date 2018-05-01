@@ -13,7 +13,7 @@ import (
 /*
 	get image inspect
  */
-func Inspect(context *gin.Context) {
+func InspectModule(context *gin.Context) {
 	imageIdStr := context.Param("packageId")
 	imageId, err := strconv.Atoi(imageIdStr)
 	if nil != err {
