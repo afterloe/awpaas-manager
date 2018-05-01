@@ -15,10 +15,13 @@ const priv_LIST = "SELECT id, name, icon, version, createTime, updateTime, \"gro
 
 func priv_ListPackageByCondition(condition map[string]string) string {
 	var conditionArr []string
+	if 0 == len(condition) {
+		return "SELECT id, name, icon, version, createTime, updateTime, \"group\" FROM " + priv_TABLE_NAME + " LIMIT $1,$2"
+	}
 	for key,val := range condition {
 		switch key {
 		case "group":
-			conditionArr = append(conditionArr, "group " + val)
+			conditionArr = append(conditionArr, "\"group\" " + val)
 			break
 		case "status":
 			conditionArr = append(conditionArr, "status " + val)

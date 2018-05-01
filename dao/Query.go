@@ -51,6 +51,8 @@ func (query *queryExecute) execute(db *sql.DB) (interface{}, error) {
 }
 
 func Query(sql string, args ...interface{})([]map[string]interface{}, error) {
+	fmt.Println(sql)
+	fmt.Println(args)
 	result, err := use(&queryExecute{sql, args})
 	if nil != err {
 		fmt.Println(err)
