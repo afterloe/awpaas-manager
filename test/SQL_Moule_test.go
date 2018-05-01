@@ -6,7 +6,7 @@ import (
 	"reflect"
 )
 
-func Test_dao_func_insert(t *testing.T) {
+func pri_Test_dao_func_insert(t *testing.T) {
 	var (
 		sql = "INSERT INTO uploadRecode VALUES($1, $2, $3, $4, $5)"
 		items = [][]interface{}{
@@ -29,11 +29,11 @@ func Test_dao_func_insert(t *testing.T) {
 
 func Test_dao_func_query(t *testing.T) {
 	var (
-		sql = "SELECT * FROM uploadRecode"
-		//args = 0
+		sql = "SELECT id, name, icon, version, createTime, updateTime, \"group\" FROM package_registry WHERE status = $3 LIMIT $1,$2"
+		args = []interface{}{0, 0, 50}
 	)
 
-	result, err := dao.Query(sql, nil)
+	result, err := dao.Query(sql, args...)
 	if nil != err {
 		t.Error(err)
 		return
