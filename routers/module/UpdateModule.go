@@ -36,5 +36,10 @@ func UpdateModule(context *gin.Context) {
 		context.Error(&exceptions.Error{Msg: "No such this package", Code: 404})
 		return
 	}
-	packageRegistry.UpdatePackageInfo(result, imageName, version, group, changeLog, prefix)
+	res, err := packageRegistry.UpdatePackageInfo(result, imageName, version, group, changeLog, prefix)
+	if nil != err {
+		context.Error(err)
+		return
+	}
+	context.JSON(200, util.Success(res))
 }

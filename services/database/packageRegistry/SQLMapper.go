@@ -31,3 +31,7 @@ func priv_ListPackageByCondition(condition map[string]string) string {
 	return "SELECT id, name, icon, version, createTime, updateTime, \"group\" FROM " + priv_TABLE_NAME +
 		" WHERE " + strings.Join(conditionArr, " AND ") + " LIMIT $1,$2"
 }
+
+func priv_UpdatePackageByCondition(condition map[string]string) string {
+
+}
