@@ -24,10 +24,10 @@
   },
   "services": {
     "docker-cli": {
-      "version": "1.36",
+      "version": "1.39",
       "socket": {
         "enable": true,
-        "addr": "https://cw.dnfy.cn/docker/"
+        "addr": "http://127.0.0.1:11000"
       }
     }
   }

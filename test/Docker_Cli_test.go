@@ -10,7 +10,16 @@ import (
 	"../services/docker-cli"
 )
 
-func Test_buildImgae_service(t *testing.T) {
+func Test_getImageList(t *testing.T) {
+	images, err := docker_cli.ListImage()
+	if nil != err {
+		t.Error(err)
+		return
+	}
+	t.Log(images)
+}
+
+func tTest_buildImgae_service(t *testing.T) {
 	var (
 		contextPath = "/tmp/uploadImage/993CA2B6A5934991A42225D47EA7F4F6"
 		imageFullName = "127.0.0.1/ascs/digital-summit"
