@@ -3,9 +3,11 @@ package server
 import (
 	"github.com/gin-gonic/gin"
 	"net/http"
-	"../routers"
 	"../integrate/logger"
 	"../integrate/notSupper"
+	"../util"
+	"../config"
+	"../routers"
 	"os"
 )
 
@@ -25,6 +27,7 @@ func StartUpTCPServer(addr *string) {
 	engine.Use(notSupper.HasError())
 	engine.NoRoute(notSupper.NotFound(&notFoundStr))
 	engine.NoMethod(notSupper.NotSupper(&notSupperStr))
+	infoEntryPoint(engine)
 	routers.Execute(engine.Group("/v1"))
 	server := &http.Server{
 		Addr: *addr,
@@ -38,4 +41,11 @@ func StartUpTCPServer(addr *string) {
 		logger.Error(error.Error())
 		os.Exit(102)
 	}
+}
+
+func infoEntryPoint(c *gin.Engine) {
+	info := config.Get("info").(map[string]interface{})
+	c.GET("/info", func(context *gin.Context) {
+		context.JSON(http.StatusOK, util.Success(info))
+	})
 }

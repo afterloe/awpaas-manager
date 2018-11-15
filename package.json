@@ -1,8 +1,11 @@
 {
-  "name": "awpaas-manager",
-  "version": "1.0.0",
-  "author": "afterloe[lm6289511@gmai.com]",
-  "homePage": "https://github.com/afterloe",
+  "info": {
+    "name": "awpaas-manager",
+    "version": "1.0.0",
+    "author": "afterloe[lm6289511@gmai.com]",
+    "homePage": "https://github.com/afterloe",
+    "remarks": "统一管理子系统：负责对平台进行统一管理的服务"
+  },
   "server": {
     "addr": "127.0.0.1",
     "port": "8080",
@@ -21,10 +24,10 @@
   },
   "services": {
     "docker-cli": {
-      "version": "1.36",
+      "version": "1.39",
       "socket": {
-        "enable": false,
-        "addr": "yyy:2376"
+        "enable": true,
+        "addr": "http://127.0.0.1:11000"
       }
     }
   }

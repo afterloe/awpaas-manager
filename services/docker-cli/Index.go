@@ -32,7 +32,7 @@ func getContext() context.Context {
 
 func getCli() (*client.Client, error) {
 	if flag {
-		return client.NewClientWithOpts(client.WithHost("http://" + addr), client.WithVersion(version))
+		return client.NewClientWithOpts(client.WithHost(addr), client.WithVersion(version))
 	}
 	return client.NewClientWithOpts(client.WithVersion(version))
 }
