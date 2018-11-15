@@ -23,8 +23,8 @@
     "docker-cli": {
       "version": "1.36",
       "socket": {
-        "enable": false,
-        "addr": "yyy:2376"
+        "enable": true,
+        "addr": "https://cw.dnfy.cn/docker/"
       }
     }
   }
